@@ -1,0 +1,43 @@
+---
+# tasks file for common
+- name: Update packages
+  apt:
+    update_cache: yes
+- name: Install utilities
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+  - git
+  - tree
+  - nano
+  - npm
+- name: Cloning the git tellform
+- git:
+    repo: 'https://github.com/tellform/tellform.git'
+    dest: /home/ubuntu
+    clone: yes
+    update: no
+- name: Install grunt 
+  npm:
+    name: grunt
+    global: yes
+- name: Install bower
+  npm:
+    name: bower
+    global: yes
+- name: Install grunt-cli
+  npm: grunt-cli
+  global: yes
+- name: npm install
+  command: npm install
+  args:
+    chdir: /home/ubuntu/tellform
+- name: bower install
+  command: bower install --allow-root      
+  args:   
+    chdir: /home/ubuntu/tellform
+- name: grunt build
+  command: grunt build
+  args:
+    chdir: /home/ubuntu/tellform      
